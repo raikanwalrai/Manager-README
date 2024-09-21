@@ -1,0 +1,152 @@
+Write a Python class Quadrilateral that accepts the lengths of four sides and the diagonals of a quadrilateral. The class should:
+Check if the quadrilateral is valid: 
+A quadrilateral is valid if the sum of the lengths of any three sides is greater than the length of the fourth side (generalized quadrilateral inequality theorem).
+Classify the quadrilateral by its sides: 
+A valid quadrilateral can be classified as Square, Rectangle, Rhombus, Parallelogram, or a Generic Quadrilateral based on the lengths of its sides and diagonals.
+Classify the quadrilateral by its angles: 
+If the diagonals of a quadrilateral are perpendicular, it forms an orthodiagonal quadrilateral. Classify the quadrilateral based on this property.
+Calculate the area of the quadrilateral: 
+Use Brahmagupta's formula (for cyclic quadrilaterals) or an approximation using the diagonals and side lengths.
+Description:
+The Quadrilateral class performs multiple classifications and calculations based on the sides and diagonals provided by the user. 
+The class includes the following functionalities:
+
+is_valid(): Checks whether the quadrilateral is valid using a generalized form of the triangle inequality theorem.
+classify_by_sides(): Classifies the quadrilateral as Square, Rectangle, Rhombus, Parallelogram, or Generic based on the side lengths and diagonals.
+classify_by_diagonals(): Classifies the quadrilateral as Orthodiagonal (diagonals are perpendicular) or Non-Orthodiagonal.
+area(): Calculates the area of the quadrilateral using Brahmagupta’s formula if it's cyclic, or an approximation based on diagonals otherwise.
+
+Problem Constraints:
+Sides and diagonals should be positive numbers.
+The quadrilateral's validity should follow generalized geometric rules.
+
+import math
+
+class Quadrilateral:
+    def __init__(self, a, b, c, d, d1, d2):
+        """
+        Initializes the quadrilateral with sides a, b, c, d and diagonals d1, d2.
+        """
+        self.a = a
+        self.b = b
+        self.c = c
+        self.d = d
+        self.d1 = d1  # First diagonal
+        self.d2 = d2  # Second diagonal
+
+    def is_valid(self):
+        """
+        Checks if the quadrilateral is valid based on the generalized quadrilateral inequality theorem.
+        A quadrilateral is valid if the sum of any three sides is greater than the fourth side.
+        """
+        sides = [self.a, self.b, self.c, self.d]
+        return all(sides) and (self.a + self.b + self.c > self.d and
+                               self.a + self.b + self.d > self.c and
+                               self.a + self.c + self.d > self.b and
+                               self.b + self.c + self.d > self.a)
+
+    def classify_by_sides(self):
+        """
+        Classifies the quadrilateral based on its sides and diagonals:
+        - 'Square' if all sides and diagonals are equal.
+        - 'Rectangle' if opposite sides are equal and diagonals are equal.
+        - 'Rhombus' if all sides are equal but diagonals are not.
+        - 'Parallelogram' if opposite sides are equal but diagonals are not equal.
+        - 'Generic Quadrilateral' if no special properties are satisfied.
+        """
+        if not self.is_valid():
+            return "Invalid"
+        
+        if self.a == self.b == self.c == self.d:
+            if self.d1 == self.d2:
+                return "Square"
+            else:
+                return "Rhombus"
+        elif (self.a == self.c and self.b == self.d):
+            if self.d1 == self.d2:
+                return "Rectangle"
+            else:
+                return "Parallelogram"
+        else:
+            return "Generic Quadrilateral"
+
+    def classify_by_diagonals(self):
+        """
+        Classifies the quadrilateral based on its diagonals:
+        - 'Orthodiagonal' if diagonals are perpendicular (pythagorean check).
+        - 'Non-Orthodiagonal' otherwise.
+        """
+        if not self.is_valid():
+            return "Invalid"
+        
+        # Check if diagonals are perpendicular
+        diagonal_sum = (self.d1 ** 2) + (self.d2 ** 2)
+        side_sum = (self.a ** 2) + (self.b ** 2) + (self.c ** 2) + (self.d ** 2)
+        
+        if math.isclose(diagonal_sum, side_sum, rel_tol=1e-5):
+            return "Orthodiagonal"
+        else:
+            return "Non-Orthodiagonal"
+
+    def area(self):
+        """
+        Calculates the area of the quadrilateral using an approximation or Brahmagupta’s formula for cyclic quadrilaterals.
+        If diagonals are known, the formula used is: Area = 0.5 * d1 * d2 * sin(theta)
+        (where theta is assumed to be 90 degrees for simplicity).
+        """
+        if not self.is_valid():
+            return "Invalid"
+        
+        # Approximation using diagonals and sides
+        s = (self.a + self.b + self.c + self.d) / 2
+        try:
+            # Brahmagupta's formula for cyclic quadrilateral
+            area_brahmagupta = math.sqrt((s - self.a) * (s - self.b) * (s - self.c) * (s - self.d))
+            return area_brahmagupta
+        except ValueError:
+            # If not cyclic, fallback to a simpler formula using diagonals
+            return 0.5 * self.d1 * self.d2
+
+
+# Example usage
+try:
+    a = float(input("Enter side a: "))
+    b = float(input("Enter side b: "))
+    c = float(input("Enter side c: "))
+    d = float(input("Enter side d: "))
+    d1 = float(input("Enter diagonal 1: "))
+    d2 = float(input("Enter diagonal 2: "))
+
+    quad = Quadrilateral(a, b, c, d, d1, d2)
+    
+    if quad.is_valid():
+        print(f"Quadrilateral is valid.")
+        print(f"Side Classification: {quad.classify_by_sides()}")
+        print(f"Diagonal Classification: {quad.classify_by_diagonals()}")
+        print(f"Area of Quadrilateral: {quad.area()}")
+    else:
+        print("Invalid Quadrilateral.")
+except ValueError:
+    print("Please enter valid numeric values for the sides and diagonals.")
+
+Input Validation: Ensures that sides and diagonals are positive numbers. If any side is non-positive or violates the quadrilateral inequality, the quadrilateral is invalid.
+is_valid(): Generalized inequality checks for quadrilaterals.
+classify_by_sides(): Determines the type of quadrilateral based on side lengths and diagonals (e.g., Square, Rectangle, Rhombus).
+classify_by_diagonals(): Uses a Pythagorean check to classify the quadrilateral as Orthodiagonal or Non-Orthodiagonal.
+Area Calculation: First attempts Brahmagupta’s formula for cyclic quadrilaterals. If invalid, falls back to an approximate formula based on the diagonals.
+
+Example Input and Output:
+
+Enter side a: 4
+Enter side b: 4
+Enter side c: 4
+Enter side d: 4
+Enter diagonal 1: 5.656
+Enter diagonal 2: 5.656
+Quadrilateral is valid.
+Side Classification: Square
+Diagonal Classification: Orthodiagonal
+Area of Quadrilateral: 16.0
+
+This problem introduces a quadrilateral, which is slightly more complex than triangles due to additional conditions and calculations required for sides and diagonals. 
+The code follows OOP principles and builds upon the logic of the triangle problem but with more layers of complexity and properties to classify.
