@@ -1,0 +1,82 @@
+Write a Python class that solves the Goldbach's Conjecture for a given even integer n. 
+The Goldbach's Conjecture asserts that every even integer greater than 2 can be expressed as the sum of two prime numbers.
+
+For a given even integer n, the class should:
+
+Identify all pairs of prime numbers (p1, p2) such that p1 + p2 = n.
+Return these pairs as a list of tuples, where each tuple represents one pair of prime numbers whose sum equals n.
+Sort the list of pairs in ascending order.
+Example:
+Input:
+n = 20
+
+Output:
+[(3, 17), (7, 13)]
+
+Explanation:
+For n = 20, the valid prime pairs that sum up to 20 are (3, 17) and (7, 13).
+
+class GoldbachConjecture:
+    def __init__(self, n):
+        """
+        Initializes the class with an even integer n.
+        """
+        if n % 2 != 0 or n < 4:
+            raise ValueError("Input must be an even integer greater than 2.")
+        self.n = n
+
+    def is_prime(self, num):
+        """
+        Checks if a given number is a prime number.
+        """
+        if num < 2:
+            return False
+        for i in range(2, num // 2 + 1):
+            if num % i == 0:
+                return False
+        return True
+
+    def find_goldbach_pairs(self):
+        """
+        Finds all pairs of prime numbers that sum up to the even integer n.
+        Returns the list of tuples containing prime pairs.
+        """
+        prime_pairs = []
+        for i in range(2, self.n // 2 + 1):
+            if self.is_prime(i) and self.is_prime(self.n - i):
+                prime_pairs.append((i, self.n - i))
+        
+        return sorted(prime_pairs)
+
+# Example usage:
+if __name__ == "__main__":
+    n = int(input("Enter an even integer greater than 2: "))
+    goldbach = GoldbachConjecture(n)
+    pairs = goldbach.find_goldbach_pairs()
+    print(pairs)
+
+Explanation:
+
+Class GoldbachConjecture:
+
+This class is initialized with an even integer n. If the input is not an even number greater than 2, a ValueError is raised to ensure valid input.
+Method is_prime:
+
+This method checks if a given number is prime by testing divisibility up to half the number.
+Method find_goldbach_pairs:
+
+This method iterates from 2 to n // 2 and checks whether both i and n - i are prime. If so, it appends the pair (i, n - i) to the result list.
+The pairs are then sorted in ascending order.
+Example Input/Output:
+Input:
+n = 20
+Output:
+[(3, 17), (7, 13)]
+Input:
+n = 40
+Output:
+[(3, 37), (11, 29), (17, 23)]
+Key Differences and Improvements:
+OOP Structure: The procedural code is converted into an object-oriented structure with methods that encapsulate the logic for checking prime numbers and finding Goldbach pairs.
+Input Validation: The class constructor checks whether the input is a valid even number greater than 2.
+Modularity: The code is modular with separate methods for prime checking and finding Goldbach pairs, improving readability and reusability.
