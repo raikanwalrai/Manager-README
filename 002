@@ -4,6 +4,7 @@ Check if the triangle is valid: A triangle is valid if the sum of the lengths of
 Classify the triangle by its sides: A valid triangle can be classified as Equilateral, Isosceles, or Scalene.
 Classify the triangle by its angles: A valid triangle can be classified as Acute, Right, or Obtuse based on the angle between its sides.
 Calculate the area of the triangle: Using Heron's formula, calculate the area of a valid triangle.
+
 Description:
 The Triangle class is used to perform multiple classifications and calculations based on the sides provided by the user. The class includes the following functionalities:
 
