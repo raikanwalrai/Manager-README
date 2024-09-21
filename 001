@@ -1,14 +1,39 @@
-Object-Oriented Programming (OOP) was introduced and developed through the contributions of several key figures in the computer science field during the 1960s and 1970s. 
-Here’s a brief overview of how OOP evolved and the people who played a significant role in its development:
+We define "cousin primes" as pairs of prime numbers that differ by 4. 
+For example, (3, 7), (7, 11), and (13, 17) are cousin primes.
+Write a class-based OOP solution that:
+Finds all the cousin primes between two given numbers n and m, where n < m.
+For each cousin prime pair (a, b), calculate the sum of digits for both a and b, and 
+return the list of tuples (a, b, sum_a, sum_b) where sum_a is the sum of digits of a and sum_b is the sum of digits of b.
 
-Early Concepts and Foundations Simula (1960s): The concept of OOP was first introduced in the 1960s with the development of the Simula programming language. 
-Ole-Johan Dahl and Kristen Nygaard were the primary developers of Simula at the Norwegian Computing Center (Norsk Regnesentral) in Oslo, Norway. 
-Simula is considered one of the first object-oriented languages because it introduced the concept of classes and objects, and allowed the creation of reusable software components through these abstractions.
-Evolution and Popularization Smalltalk (1970s): Following Simula, the next significant development in OOP was the creation of the Smalltalk programming language. 
-Alan Kay, Dan Ingalls, Adele Goldberg, and other researchers at Xerox PARC (Palo Alto Research Center) developed Smalltalk in the early 1970s. 
-Smalltalk was influential in popularizing the OOP paradigm. 
-It introduced many concepts of modern OOP, including the notion of objects as the fundamental units of computation, and it emphasized the importance of message passing between objects.
-Further Developments C++ (1980s): The OOP concepts from Simula and Smalltalk were further refined and incorporated into the C++ programming language.
-Bjarne Stroustrup began developing C++ at Bell Labs in the early 1980s. 
-C++ was designed to be an extension of the C programming language with object-oriented features added, allowing for both procedural and object-oriented programming. 
-Java (1990s): Java further solidified the adoption of OOP principles and became widely used.
+class CousinPrimes:
+    def __init__(self, n, m):
+        self.n = n
+        self.m = m
+
+    def check_prime(self, num):
+        if num <= 1:
+            return False
+        counter = 0
+        for i in range(1, num + 1):
+            if num % i == 0:
+                counter += 1
+            if counter > 2:
+                return False
+        return counter == 2 and num > 1
+
+    def sum_of_digits(self, num):
+        return sum(int(digit) for digit in str(num))
+
+    def find_cousin_primes(self):
+        cousin_primes_list = []
+        for i in range(self.n, self.m + 1):
+            if self.check_prime(i) and self.check_prime(i + 4) and i + 4 <= self.m:
+                sum_a = self.sum_of_digits(i)
+                sum_b = self.sum_of_digits(i + 4)
+                cousin_primes_list.append((i, i + 4, sum_a, sum_b))
+        return cousin_primes_list
+
+# Example usage
+cousin_primes_finder = CousinPrimes(3, 50)
+result = cousin_primes_finder.find_cousin_primes()
+print(result)
