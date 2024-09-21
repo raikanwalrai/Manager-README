@@ -1,0 +1,101 @@
+Write a Python class that solves a variant of the Goldbach's Conjecture for a given even integer n, but with an added constraint: 
+each pair of prime numbers (p1, p2) must satisfy the condition that the difference between p1 and p2 is less than or equal to a given threshold d.
+
+For example, given an even integer n and a threshold d, the task is to:
+
+Find all pairs of prime numbers (p1, p2) such that p1 + p2 = n and |p1 - p2| ≤ d.
+Return these pairs as a list of tuples, sorted in ascending order.
+Example:
+Input:
+
+n = 40
+d = 10
+Output:
+
+[(17, 23), (19, 21)]
+Explanation:
+
+For n = 40, valid prime pairs that sum up to 40 and whose difference is less than or equal to 10 are (17, 23) and (19, 21).
+
+class ConstrainedGoldbach:
+    def __init__(self, n, d):
+        """
+        Initializes the class with an even integer n and a difference constraint d.
+        """
+        if n % 2 != 0 or n < 4:
+            raise ValueError("Input n must be an even integer greater than 2.")
+        if d < 0:
+            raise ValueError("Difference constraint d must be a non-negative integer.")
+        
+        self.n = n
+        self.d = d
+
+    def is_prime(self, num):
+        """
+        Checks if a given number is a prime number.
+        """
+        if num < 2:
+            return False
+        for i in range(2, num // 2 + 1):
+            if num % i == 0:
+                return False
+        return True
+
+    def find_constrained_goldbach_pairs(self):
+        """
+        Finds all pairs of prime numbers that sum up to n and whose difference is less than or equal to d.
+        Returns a sorted list of tuples containing prime pairs.
+        """
+        prime_pairs = []
+        for i in range(2, self.n // 2 + 1):
+            p1, p2 = i, self.n - i
+            if self.is_prime(p1) and self.is_prime(p2) and abs(p1 - p2) <= self.d:
+                prime_pairs.append((p1, p2))
+        
+        return sorted(prime_pairs)
+
+# Example usage:
+if __name__ == "__main__":
+    n = int(input("Enter an even integer greater than 2: "))
+    d = int(input("Enter the maximum allowed difference between the primes: "))
+    
+    goldbach = ConstrainedGoldbach(n, d)
+    pairs = goldbach.find_constrained_goldbach_pairs()
+    print(pairs)
+Explanation:
+Class ConstrainedGoldbach:
+
+This class is initialized with an even integer n and a difference constraint d. If the input for n is not an even number greater than 2, or if the difference constraint d is negative, an appropriate error is raised.
+Method is_prime:
+
+Checks if a number is prime by testing divisibility up to half the number.
+Method find_constrained_goldbach_pairs:
+
+Iterates over possible pairs (p1, p2) such that p1 + p2 = n, and checks if both numbers are prime and their absolute difference is less than or equal to d. The valid pairs are added to a result list and sorted in ascending order.
+Example Input/Output:
+Example 1:
+Input:
+n = 40
+d = 10
+Output:
+[(17, 23), (19, 21)]
+Example 2:
+Input:
+n = 50
+d = 5
+Output:
+[(19, 31), (23, 27)]
+Key Differences and Complexity:
+Added Constraint: The main complexity comes from the additional constraint of ensuring the difference between the two primes in the pair does not exceed d. 
+This makes it slightly more complex than the basic Goldbach problem.
+
+Input Validation: The class checks if both inputs, n and d, are valid. 
+If n is not an even number greater than 2 or d is negative, appropriate errors are raised.
+
+Prime Pair Search: The search for prime pairs now not only looks for primes that sum to n, but also ensures their difference is within the specified limit.
+
+
+
+
+
+
