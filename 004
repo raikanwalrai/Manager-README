@@ -1,0 +1,77 @@
+Write a Python class MinDifferenceFinder that, given a list L of integers and a positive integer P, finds the minimum difference between the maximum and minimum values in any subset of size P from the list L. The list L contains more elements than P, and the elements of the subset must be distinct. If multiple subsets have the same minimum difference, the class will return that minimum value.
+
+Description:
+The task is to pick P different elements from the list L where the difference between the maximum and minimum value is minimized compared to other subsets. The class-based implementation should:
+
+Sort the list L: Sorting the list will allow for easier calculation of the difference between consecutive elements.
+Find the Minimum Difference: Iterate through subsets of size P and calculate the difference between the maximum and minimum of each subset.
+Return the Minimum Difference: After comparing all possible subsets, return the minimum difference found.
+
+class MinDifferenceFinder:
+    def __init__(self, L, P):
+        """
+        Initializes the object with a list of integers L and a positive integer P.
+        """
+        self.L = L
+        self.P = P
+
+    def find_min_difference(self):
+        """
+        Finds the minimum difference between the maximum and minimum values in any subset of size P.
+        """
+        # Sort the list to make it easier to find the minimum difference
+        self.L.sort()
+        
+        # Initialize variables
+        min_diff = float('inf')  # Start with a large number for minimum difference
+        M = len(self.L)
+        
+        # Iterate through the list and check subsets of size P
+        for i in range(M - self.P + 1):
+            current_diff = self.L[i + self.P - 1] - self.L[i]
+            if current_diff < min_diff:
+                min_diff = current_diff
+
+        return min_diff
+
+
+# Example usage:
+if __name__ == "__main__":
+    L = [3, 4, 1, 9, 56, 7, 9, 12, 13]
+    P = 5
+    finder = MinDifferenceFinder(L, P)
+    print(f"Minimum Difference: {finder.find_min_difference()}")
+
+
+Explanation:
+Class MinDifferenceFinder:
+
+This class takes the list L and the integer P as inputs via the __init__ method.
+The find_min_difference method calculates the minimum difference by iterating through the list, finding subsets of size P, and calculating the difference between the maximum and minimum values in each subset.
+The method returns the smallest difference found.
+Sorting:
+
+The list L is sorted before calculation, as it simplifies finding the smallest difference in a subset of consecutive elements.
+Iterative Calculation:
+
+The program iterates through the sorted list and checks each subset of size P by calculating the difference between the last and first element in the subset (since the list is sorted, this will always give the minimum difference in that subset).
+Efficiency:
+
+Sorting the list takes 
+O(nlogn), and the subsequent loop runs in 
+O(n), making the overall time complexity 
+O(nlogn), which is efficient for this problem.
+Example Input/Output:
+Input:
+L = [3, 4, 1, 9, 56, 7, 9, 12, 13]
+P = 5
+Output:
+Minimum Difference: 6
+
+Explanation:
+The two subsets with the minimum difference are [3, 4, 7, 9, 9] and [7, 9, 9, 12, 13]. 
+In both cases, the difference between the maximum and minimum values is 6, which is the smallest possible difference for any subset of size P.
+
+Improved Problem Complexity:
+This version generalizes the problem by creating a class that can handle multiple instances of the problem and ensures a clean, modular approach to solving it. 
+The class-based implementation provides better readability and reusability, especially when working with multiple lists and P values.
