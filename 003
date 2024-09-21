@@ -3,7 +3,7 @@ Check if the quadrilateral is valid:
 A quadrilateral is valid if the sum of the lengths of any three sides is greater than the length of the fourth side (generalized quadrilateral inequality theorem).
 Classify the quadrilateral by its sides: 
 A valid quadrilateral can be classified as Square, Rectangle, Rhombus, Parallelogram, or a Generic Quadrilateral based on the lengths of its sides and diagonals.
-Classify the quadrilateral by its angles: 
+Classify the quadrilateral by its angles:  
 If the diagonals of a quadrilateral are perpendicular, it forms an orthodiagonal quadrilateral. Classify the quadrilateral based on this property.
 Calculate the area of the quadrilateral: 
 Use Brahmagupta's formula (for cyclic quadrilaterals) or an approximation using the diagonals and side lengths.
