@@ -1,0 +1,79 @@
+Write a Python class that identifies the type of the unique element in a list. 
+The unique element is defined as the one that occurs exactly once, while all other elements occur multiple times. 
+The class should provide a method to return the name of the type of the unique element in the list. If there are no unique elements, the method should return None.
+
+Example
+Input:
+
+L = [1, 'hello', 3.5, 'world', 1, 'hello']
+Output:
+
+str
+Explanation:
+
+In the list, the string 'world' is the unique element, and its type is str.
+
+
+class UniqueElementFinder:
+    def __init__(self, elements):
+        """
+        Initializes the class with a list of elements.
+        """
+        self.elements = elements
+
+    def find_unique_type(self):
+        """
+        Finds the type of the unique element in the list.
+        Returns the type name of the unique element, or None if there is no unique element.
+        """
+        type_count = {}
+        
+        # Count the occurrences of each type
+        for elem in self.elements:
+            elem_type = type(elem)
+            if elem_type not in type_count:
+                type_count[elem_type] = 0
+            type_count[elem_type] += 1
+
+        # Identify the type with exactly one occurrence
+        for key, value in type_count.items():
+            if value == 1:
+                return key.__name__
+
+        return None  # Return None if there is no unique type
+
+# Example usage:
+if __name__ == "__main__":
+    input_list = eval(input("Enter a list of elements: ").strip())
+    finder = UniqueElementFinder(input_list)
+    unique_type = finder.find_unique_type()
+    print(unique_type)
+Explanation:
+Class UniqueElementFinder:
+
+This class is initialized with a list of elements and provides a method to identify the type of the unique element.
+Method find_unique_type:
+
+This method creates a dictionary to count occurrences of each type of element in the list.
+It iterates through the elements, updating the count for each type.
+Finally, it checks for any type that has exactly one occurrence and returns its name. If none is found, it returns None.
+Example Input/Output
+Example 1:
+Input:
+[1, 'hello', 3.5, 'world', 1, 'hello']
+Output:
+str
+Example 2:
+Input:
+[1, 2, 3, 'test', 'test']
+Output:
+int
+Example 3:
+Input:
+[1, 2, 3, 1, 2]
+Output:
+None
+Key Features:
+Object-Oriented Structure: The use of a class encapsulates the functionality related to finding the unique element.
+Modular Code: The method can be easily tested and reused without affecting the initialization.
+Clear Return Types: The method returns either the name of the type or None, providing a clear interface for users.
