@@ -1,4 +1,5 @@
 We define "cousin primes" as pairs of prime numbers that differ by 4. 
+
 For example, (3, 7), (7, 11), and (13, 17) are cousin primes.
 Write a class-based OOP solution that:
 Finds all the cousin primes between two given numbers n and m, where n < m.
