@@ -1,0 +1,107 @@
+Design a Python class that identifies the unique element in a list, where "unique" is defined as an element that appears exactly once. 
+The class should provide a method to return the value of the unique element, if it exists. 
+If there are multiple unique elements, the method should return a list of those elements. If there are no unique elements, it should return None.
+
+Example
+Input:
+
+L = [1, 'hello', 3.5, 'world', 1, 3.5, 'hello']
+Output:
+
+['world']
+Explanation:
+
+In the list, the unique element is 'world', as it appears only once.
+
+
+class UniqueElementFinder:
+    def __init__(self, elements):
+        """
+        Initializes the class with a list of elements.
+        """
+        self.elements = elements
+
+    def find_unique_elements(self):
+        """
+        Finds all unique elements in the list.
+        Returns a list of unique elements or None if there are no unique elements.
+        """
+        element_count = {}
+
+        # Count occurrences of each element
+        for elem in self.elements:
+            if elem not in element_count:
+                element_count[elem] = 0
+            element_count[elem] += 1
+
+        # Gather unique elements
+        unique_elements = [key for key, value in element_count.items() if value == 1]
+
+        return unique_elements if unique_elements else None
+
+# Example usage:
+if __name__ == "__main__":
+    input_list = eval(input("Enter a list of elements: ").strip())
+    finder = UniqueElementFinder(input_list)
+    unique_elements = finder.find_unique_elements()
+    print(unique_elements)
+
+
+
+Problem Statement
+Design a Python class that identifies the unique element in a list, where "unique" is defined as an element that appears exactly once. The class should provide a method to return the value of the unique element, if it exists. If there are multiple unique elements, the method should return a list of those elements. If there are no unique elements, it should return None.
+
+Example
+Input:
+
+L = [1, 'hello', 3.5, 'world', 1, 3.5, 'hello']
+Output:
+
+['world']
+Explanation:
+
+In the list, the unique element is 'world', as it appears only once.
+Code Implementation (OOP Style)
+python
+Copy code
+class UniqueElementFinder:
+    def __init__(self, elements):
+        """
+        Initializes the class with a list of elements.
+        """
+        self.elements = elements
+
+    def find_unique_elements(self):
+        """
+        Finds all unique elements in the list.
+        Returns a list of unique elements or None if there are no unique elements.
+        """
+        element_count = {}
+
+        # Count occurrences of each element
+        for elem in self.elements:
+            if elem not in element_count:
+                element_count[elem] = 0
+            element_count[elem] += 1
+
+        # Gather unique elements
+        unique_elements = [key for key, value in element_count.items() if value == 1]
+
+        return unique_elements if unique_elements else None
+
+# Example usage:
+if __name__ == "__main__":
+    input_list = eval(input("Enter a list of elements: ").strip())
+    finder = UniqueElementFinder(input_list)
+    unique_elements = finder.find_unique_elements()
+    print(unique_elements)
+Explanation:
+Class UniqueElementFinder:
+
+This class is initialized with a list of elements and provides a method to identify the unique elements.
+Method find_unique_elements:
+
+This method creates a dictionary to count occurrences of each element in the list.
+It iterates through the elements, updating the count for each.
+It then compiles a list of elements that have a count of one.
+If there are unique elements, it returns them; otherwise, it returns None.
